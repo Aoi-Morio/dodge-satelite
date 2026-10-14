@@ -1,0 +1,29 @@
+{
+  "site": {
+    "latitude_deg": 35.6812,
+    "longitude_deg": 139.7671,
+    "elevation_m": 40,
+    "name": "Tokyo (demo)"
+  },
+  "target": {
+    "ra_deg": 338.5825183192416,
+    "dec_deg": 61.562874435693125,
+    "name": "Synthetic crossing demonstration"
+  },
+  "start": "2024-05-08T18:49:54.999776+00:00",
+  "end": "2024-05-08T18:59:54.999776+00:00",
+  "equipment": {
+    "focal_length_mm": 100,
+    "sensor_width_mm": 23.5,
+    "sensor_height_mm": 15.6
+  },
+  "exposure_s": 30,
+  "readout_s": 2,
+  "sample_s": 0.5,
+  "padding_s": 3,
+  "angular_margin_deg": 0.1,
+  "min_target_alt_deg": 20,
+  "max_sun_alt_deg": -6,
+  "sunlit_only": true,
+  "max_epoch_age_days": 7
+}

@@ -1,0 +1,10 @@
+{
+  "site": {"name": "Tokyo example — edit before use", "latitude_deg": 35.6812, "longitude_deg": 139.7671, "elevation_m": 40},
+  "target": {"name": "M31 approximate center", "ra_deg": 10.6847, "dec_deg": 41.2687},
+  "equipment": {"focal_length_mm": 400, "sensor_width_mm": 23.5, "sensor_height_mm": 15.6},
+  "start": "2026-10-14T21:00:00+09:00",
+  "end": "2026-10-14T22:00:00+09:00",
+  "exposure_s": 60, "readout_s": 2, "sample_s": 0.5, "padding_s": 3,
+  "angular_margin_deg": 0.1, "min_target_alt_deg": 25, "max_sun_alt_deg": -12,
+  "sunlit_only": true, "max_epoch_age_days": 7
+}

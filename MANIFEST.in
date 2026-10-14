@@ -1,0 +1,12 @@
+include README.md README.ja.md LICENSE THIRD_PARTY_NOTICES.md CHANGELOG.md CONTRIBUTING.md
+include constraints-windows-py312.txt
+include global.json
+recursive-include docs *.md
+recursive-include docs *.png
+recursive-include examples *.json *.csv
+recursive-include scripts *.py
+recursive-include licenses *.txt *.md
+recursive-include tests *.py
+recursive-include nina *.cs *.csproj *.xaml *.md
+recursive-include .github *.yml
+recursive-include src/dodge_satelite/data *.json *.csv

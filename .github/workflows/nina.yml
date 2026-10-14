@@ -1,0 +1,60 @@
+name: Build NINA plugin
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nina-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  nina-windows:
+    runs-on: windows-latest
+    env:
+      PYTHONUTF8: '1'
+      QT_QPA_PLATFORM: offscreen
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: constraints-windows-py312.txt
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '8.0.x'
+      - run: python -m pip install -e ".[dev]" -c constraints-windows-py312.txt
+      - name: Test Python engine and NINA bridge
+        run: python -m pytest -q
+      - name: Test exposure gate and NINA SDK integration
+        shell: pwsh
+        run: |
+          $env:DODGE_SATELITE_TEST_PYTHON = (Get-Command python).Source
+          dotnet test nina/DodgeSatelite.Gate.Tests -c Release --logger trx
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet test nina/DodgeSatelite.NINA.Tests -c Release --logger trx
+          exit $LASTEXITCODE
+      - name: Package and smoke-test private prediction engine
+        run: python scripts/build_nina_plugin.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: Dodge-Satelite-NINA-0.2.0-windows-x64
+          path: |
+            dist/Dodge-Satelite-NINA-*.zip
+            dist/Dodge-Satelite-NINA-*.sha256
+            dist/Dodge-Satelite-NINA-*.manifest.json
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: NINA-test-results
+          path: nina/**/TestResults/*.trx

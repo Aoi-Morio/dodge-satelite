@@ -1,0 +1,47 @@
+<ResourceDictionary x:Class="DodgeSatelite.NINA.InstructionTemplates"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:DodgeSatelite.NINA">
+    <local:StandardExposureTemplateSelector x:Key="StandardExposureTemplate" />
+    <DataTemplate DataType="{x:Type local:SatelliteAwareExposure}">
+        <StackPanel>
+            <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource StandardExposureTemplate}" />
+            <Expander Header="dodge satelite / 衛星通過回避設定" Margin="20,0,8,8" IsExpanded="True">
+                <StackPanel Margin="8">
+                    <TextBlock TextWrapping="Wrap" Foreground="DarkOrange"
+                        Text="Experimental / 実験版：選択カタログのみ対象。写り込み・予測精度は保証しません。エラー時は標準で停止します。" />
+                    <WrapPanel Margin="0,6">
+                        <TextBlock Text="CelesTrak group / 衛星群" VerticalAlignment="Center"/>
+                        <TextBox Width="110" Margin="6,0,14,0" Text="{Binding CatalogGroup}"/>
+                        <CheckBox Content="Cache only / オフライン" IsChecked="{Binding Offline}"/>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <TextBlock Text="Max wait / 最大待機 分" VerticalAlignment="Center"/>
+                        <TextBox Width="55" Margin="6,0,14,0" Text="{Binding MaximumWaitMinutes}"/>
+                        <TextBlock Text="Epoch age limit / 元期差 日" VerticalAlignment="Center"/>
+                        <TextBox Width="55" Margin="6,0" Text="{Binding MaxEpochAgeDays}"/>
+                    </WrapPanel>
+                    <TextBlock Margin="0,6" TextWrapping="Wrap" Text="対象・観測地・焦点距離・センサーはNINAから取得。visual/stationsは一部の衛星のみ。activeでも未登録衛星は対象外です。"/>
+                    <Expander Header="Advanced / 詳細">
+                        <StackPanel Margin="8">
+                            <TextBlock Text="Forecast minutes / 予測時間 分"/><TextBox Text="{Binding LookAheadMinutes}"/>
+                            <TextBlock Text="Sampling seconds / サンプル間隔 秒"/><TextBox Text="{Binding SampleSeconds}"/>
+                            <TextBlock Text="Angular margin degrees / 角度余裕 度"/><TextBox Text="{Binding AngularMarginDegrees}"/>
+                            <TextBlock Text="Time padding seconds / 前後の余裕 秒"/><TextBox Text="{Binding PaddingSeconds}"/>
+                            <TextBlock Text="Exposure handoff buffer seconds / 露光開始の余裕 秒"/><TextBox Text="{Binding HandoffGuardSeconds}"/>
+                            <TextBlock Text="Minimum target altitude degrees / 最低対象高度 度"/><TextBox Text="{Binding MinimumTargetAltitude}"/>
+                            <TextBlock Text="Maximum Sun altitude degrees / 最大太陽高度 度"/><TextBox Text="{Binding MaximumSunAltitude}"/>
+                            <CheckBox Content="Sunlit and penumbra only / 日照・半影のみ回避" IsChecked="{Binding SunlitOnly}"/>
+                            <TextBlock Text="Overrides: 0 = NINA automatic / 0はNINAから自動取得" TextWrapping="Wrap"/>
+                            <TextBlock Text="Focal length mm / 焦点距離 mm"/><TextBox Text="{Binding FocalLengthOverrideMm}"/>
+                            <TextBlock Text="Sensor width mm / センサー幅 mm"/><TextBox Text="{Binding SensorWidthOverrideMm}"/>
+                            <TextBlock Text="Sensor height mm / センサー高 mm"/><TextBox Text="{Binding SensorHeightOverrideMm}"/>
+                            <TextBlock Text="Engine path: blank = bundled / エンジンパス：空欄は同梱版"/><TextBox Text="{Binding EnginePath}"/>
+                        </StackPanel>
+                    </Expander>
+                    <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" Text="{Binding StatusText}"/>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>
